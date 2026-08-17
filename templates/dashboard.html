@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>TaskFlow Dashboard</title>
+<style>
+  body { font-family: -apple-system, Arial, sans-serif; background:#f4f6f8; margin:0; padding:30px; color:#1f2937; }
+  h1 { margin-bottom:4px; }
+  .subtitle { color:#6b7280; margin-top:0; margin-bottom:24px; }
+  .cards { display:flex; gap:16px; margin-bottom:28px; }
+  .card { flex:1; background:white; border-radius:10px; padding:18px 20px; box-shadow:0 1px 3px rgba(0,0,0,0.08); border-top:4px solid #999; }
+  .card.pending { border-top-color:#2563eb; }
+  .card.completed { border-top-color:#16a34a; }
+  .card.overdue { border-top-color:#dc2626; }
+  .card .num { font-size:32px; font-weight:700; }
+  .card .label { color:#6b7280; font-size:13px; text-transform:uppercase; letter-spacing:0.03em; }
+  table { width:100%; border-collapse:collapse; background:white; border-radius:8px; overflow:hidden; margin-bottom:26px; box-shadow:0 1px 3px rgba(0,0,0,0.06); }
+  th, td { text-align:left; padding:10px 14px; border-bottom:1px solid #eee; font-size:14px; }
+  th { background:#f9fafb; color:#374151; font-size:12px; text-transform:uppercase; }
+  .section-title { font-size:16px; font-weight:600; margin:26px 0 8px; }
+  .badge { padding:2px 8px; border-radius:12px; font-size:12px; }
+  .badge.high { background:#fee2e2; color:#991b1b; }
+  .badge.medium { background:#fef3c7; color:#92400e; }
+  .badge.low { background:#e0e7ff; color:#3730a3; }
+  nav a { margin-right:14px; color:#2563eb; text-decoration:none; font-size:14px; }
+  nav a.active { font-weight:700; text-decoration:underline; }
+</style>
+</head>
+<body>
+  <h1>TaskFlow</h1>
+  <p class="subtitle">Task &amp; Productivity Dashboard</p>
+
+  <div class="cards">
+    <div class="card pending"><div class="num">{{ counts.pending }}</div><div class="label">Pending</div></div>
+    <div class="card completed"><div class="num">{{ counts.completed }}</div><div class="label">Completed</div></div>
+    <div class="card overdue"><div class="num">{{ counts.overdue }}</div><div class="label">Overdue</div></div>
+  </div>
+
+  <nav>
+    <a href="/?status=all" class="{{ 'active' if status_filter=='all' }}">All</a>
+    <a href="/?status=pending" class="{{ 'active' if status_filter=='pending' }}">Pending</a>
+    <a href="/?status=completed" class="{{ 'active' if status_filter=='completed' }}">Completed</a>
+    <a href="/?status=overdue" class="{{ 'active' if status_filter=='overdue' }}">Overdue</a>
+  </nav>
+
+  {% macro task_table(rows) %}
+  <table>
+    <tr><th>Title</th><th>Project</th><th>Assigned To</th><th>Priority</th><th>Deadline</th><th>Status</th></tr>
+    {% for r in rows %}
+    <tr>
+      <td>{{ r.title }}</td>
+      <td>{{ r.project }}</td>
+      <td>{{ r.assigned_to }}</td>
+      <td><span class="badge {{ r.priority|lower }}">{{ r.priority }}</span></td>
+      <td>{{ r.deadline.strftime('%Y-%m-%d') if r.deadline.strftime else r.deadline }}</td>
+      <td>{{ r.status }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% endmacro %}
+
+  {% if shown is not none %}
+    <div class="section-title">{{ status_filter|capitalize }} tasks</div>
+    {{ task_table(shown) }}
+  {% else %}
+    <div class="section-title">Pending</div>
+    {{ task_table(pending_rows) }}
+    <div class="section-title">Completed</div>
+    {{ task_table(completed_rows) }}
+    <div class="section-title">Overdue</div>
+    {{ task_table(overdue_rows) }}
+  {% endif %}
+
+  <div class="section-title">Productivity summary (by user)</div>
+  <table>
+    <tr><th>User</th><th>Total Tasks</th><th>Completed</th><th>Overdue</th><th>Completion Rate</th></tr>
+    {% for s in summary %}
+    <tr>
+      <td>{{ s.assigned_to }}</td>
+      <td>{{ s.total_tasks }}</td>
+      <td>{{ s.completed_tasks }}</td>
+      <td>{{ s.overdue_tasks }}</td>
+      <td>{{ s.completion_rate_pct }}%</td>
+    </tr>
+    {% endfor %}
+  </table>
+</body>
+</html>

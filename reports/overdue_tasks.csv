@@ -1,0 +1,3 @@
+id,title,status,deadline,created_at,completed_at,project,assigned_to,priority
+2,Set up staging environment,in_progress,2026-08-14,2026-08-17 19:09:22,,Website Redesign,aiyer,High
+7,Review copy for landing page,pending,2026-08-12,2026-08-17 19:09:22,,Website Redesign,skhan,Low

@@ -1,0 +1,4 @@
+id,title,status,deadline,created_at,completed_at,project,assigned_to,priority
+4,Write ETL unit tests,completed,2026-08-16,2026-08-17 19:09:22,2026-08-16,Data Pipeline Migration,rgupta,Medium
+9,Finalize Q3 report summary,completed,2026-08-21,2026-08-17 19:09:22,2026-08-21,Q3 Analytics Report,rgupta,Medium
+10,Fix broken nav on mobile,completed,2026-08-15,2026-08-17 19:09:22,2026-08-15,Website Redesign,aiyer,High

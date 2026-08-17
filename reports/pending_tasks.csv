@@ -1,0 +1,6 @@
+id,title,status,deadline,created_at,completed_at,project,assigned_to,priority
+1,Draft homepage wireframe,pending,2026-08-22,2026-08-17 19:09:22,,Website Redesign,rgupta,Medium
+3,Migrate users table to new schema,pending,2026-08-27,2026-08-17 19:09:22,,Data Pipeline Migration,skhan,High
+5,Collect Q3 raw metrics,in_progress,2026-08-19,2026-08-17 19:09:22,,Q3 Analytics Report,pverma,High
+6,Build revenue trend chart,pending,2026-08-24,2026-08-17 19:09:22,,Q3 Analytics Report,aiyer,Low
+8,Deploy pipeline to prod,pending,2026-08-31,2026-08-17 19:09:22,,Data Pipeline Migration,pverma,High
