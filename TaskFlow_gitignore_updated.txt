@@ -1,7 +1,0 @@
-__pycache__/
-*.pyc
-venv/
-.venv/
-data/*.db
-flask.log
-.env
